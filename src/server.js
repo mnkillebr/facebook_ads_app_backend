@@ -39,38 +39,11 @@ app.get('/api/ads', (req, res) => {
 });
 
 app.get("/api/ads/:id", (req, res) => {
-    collection.findOne({ 'data': { "id":req.params.id } }, (err, result) => {
+    collection.find({}).toArray((err, result) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.send(result);
+        console.log(result)
+        res.send(result[0].data.filter(obj => obj.id == req.params.id)[0]);
     });
 });
-
-// app.get('/api/ads', async (req, res) => {
-    
-// })
-
-
-
-
-// Connection URL
-
-
-// Use connect method to connect to the Server
-// MongoClient.connect(url, { useNewUrlParser: true }, { useUnifiedTopology: true }, function (err, client) {
-//     const db = client.db("test");
-//     var cursor = db.collection('inventory').find({});
-
-    
-
-//     assert.equal(null, err);
-//     client.close();
-// });
-//Connecting to DB
-// mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, () => {
-//     console.log('Connected to mongoose and cloud DB')
-// });
-
-//Listen to server
-// app.listen(3002);
